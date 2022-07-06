@@ -1,10 +1,18 @@
 import React, {FC} from 'react';
-import {StyleSheet, View, Dimensions, Text, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  Text,
+  ScrollView,
+  SafeAreaView,
+} from 'react-native';
 import {
   VictoryBar,
   VictoryChart,
   VictoryTheme,
   VictoryLine,
+  VictoryAxis,
 } from 'victory-native';
 
 import Tire from './data/model/Tire';
@@ -29,6 +37,11 @@ tuning.calculateSpeed(7000, 0.245);
 tuning.calculateSpeeds(0.245);
 
 gears = tuning.getGears();
+
+interface Speed {
+  rpm: number;
+  speed: number;
+}
 
 // hashmap gears to speed
 let speeds = Array<Number>();
@@ -158,14 +171,77 @@ const gearsView = gears.map((gear, i) => {
   );
 });
 
-const gearsView2 = gears.map((gear, i) => {
+let gear1 = Array<Gear>();
+gear1 = gears.slice(0, 1);
+
+const gear1View = gear1.map((gear, i) => {
+  let _speeds = gears[0].getRatioSpeeds();
+  var object: Speed = [
+    {
+      rpm: 0,
+      speed: 0,
+    },
+    {
+      rpm: 4000,
+      speed: 31,
+    },
+    {
+      rpm: 5000,
+      speed: 39,
+    },
+    {
+      rpm: 6000,
+      speed: 47,
+    },
+    {
+      rpm: 7000,
+      speed: 55,
+    },
+    {
+      rpm: 8000,
+      speed: 63,
+    },
+  ];
+
+  let _rpms = [0, 4000, 5000, 6000, 7000, 8000];
+
+  // map rpmSpeed to Speed object
+  for (let m = 0; m < _rpms.length; m++) {
+    object[m] = {
+      rpm: _rpms[m],
+      speed: _speeds.get(_rpms[m]),
+    };
+  }
+  return (
+    <VictoryLine
+      key={'gearD_' + i}
+      data={object}
+      y="rpm"
+      x="speed"
+      style={{
+        data: {
+          stroke: 'black',
+          strokeWidth: 2,
+        },
+      }}
+    />
+  );
+});
+
+let gearsNew = Array<Gear>();
+
+gearsNew = gears.slice(1, undefined);
+
+const gearsView2 = gearsNew.map((gear, i) => {
   interface Speed {
     rpm: number;
     speed: number;
   }
 
+  var colors = ['green', 'red', 'blue', 'orange', 'purple'];
+
   var object: Speed = [
-        {
+    {
       rpm: 0,
       speed: 0,
     },
@@ -267,7 +343,7 @@ const gearsView2 = gears.map((gear, i) => {
       x="speed"
       style={{
         data: {
-          stroke: 'green',
+          stroke: colors[i],
           strokeWidth: 2,
         },
       }}
@@ -279,33 +355,27 @@ const Speed: FC = () => {
   // forEach gears to View
 
   return (
-    <ScrollView>
-      {/* <View style={styles.container}>{gearsView}</View> */}
-
-      <View style={styles.container}>
-        <VictoryChart minDomain={{x: 0, y: 0}}>
-          {/* {gearsView} */}
-          {/* {_renderShifts()}, */}
-          {/* <VictoryLine data={_renderRpm()} x="y" y="x" /> */}
-          <VictoryLine data={_ratioSpeed} x="y" y="x" />
-          {/* <VictoryLine data={_renderSpeeds()} x="x" y="y" /> */}
-        </VictoryChart>
-        {/* {gearsView} */}
-      </View>
-      <View>
-        <VictoryChart minDomain={{y: 0}}>
-          {gearsView}
-          {gearsView2}
-        </VictoryChart>
-        {/* <VictoryChart minDomain={{x: 0, y: 0}}>{gearsView2}</VictoryChart> */}
-      </View>
-      {/* <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View>
+          <VictoryChart minDomain={{y: 0}}>
+            {gear1View}
+            {gearsView2}
+          </VictoryChart>
+          {/* <VictoryChart minDomain={{x: 0, y: 0}}>{gearsView2}</VictoryChart> */}
+        </View>
+        <View>
+          <VictoryChart minDomain={{y: 0}}>{gear1View}</VictoryChart>
+          {/* <VictoryChart minDomain={{x: 0, y: 0}}>{gearsView2}</VictoryChart> */}
+        </View>
+        {/* <View style={styles.container}>
         <VictoryChart>{gearsView}</VictoryChart>
       </View>
       <View style={styles.container}>
         <VictoryChart>{gearsView}</VictoryChart>
       </View> */}
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
