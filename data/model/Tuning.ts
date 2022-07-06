@@ -55,14 +55,11 @@ class Tuning {
   }
 
   calculateSpeeds(finalDrive: number): void {
-    let rpm: number[] = [
-      2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000,
-      13000, 14000, 15000,
-    ];
-
-    let speeds: number[] = [];
+    let rpm: number[] = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000];
 
     for (let i = 0; i < this.gears.length; i++) {
+      let speeds: number[] = [];
+      let ratioSpeeds: Map<Number, Number> = new Map<Number, Number>();
       for (let j = 0; j < rpm.length; j++) {
         let speed =
           rpm[j] *
@@ -77,10 +74,14 @@ class Tuning {
 
         // add speed to array
         speeds.push(speed);
+        // ratioSpeeds.set(speed, rpm[j]);
+        // rpm => speed
+        ratioSpeeds.set(rpm[j], speed);
       }
 
       // set gear speedss
       this.gears[i].setSpeeds(speeds);
+      this.gears[i].setRatioSpeeds(ratioSpeeds);
     }
   }
 }
