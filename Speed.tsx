@@ -438,30 +438,34 @@ const tuningView = gears.map((gear, i) => {
 const tuningView2 = gears.map((gear, i) => {
   // var colors = ['green', 'red', 'blue', 'orange', 'purple'];
 
-  var object: Speed = [
-      {
-        rpm: 4000,
-        speed: 60,
-      },
-      {
-        rpm: 5000,
-        speed: 60,
-      },
-      {
-        rpm: 6000,
-        speed: 60,
-      },
-      {
-        rpm: 7000,
-        speed: 60,
-      },
-      {
-        rpm: 8000,
-        speed: 60,
-      },
-    ];
+  // let speed =
+  //   rpm[j] *
+  //   ((1 / this.gears[i].getRatio()) *
+  //     finalDrive *
+  //     this.tire.getCircumference() *
+  //     0.001 *
+  //     60);
 
-    return (
+  let speed = gears[0].getSpeeds();
+
+  // get last element of array
+  let last = speed[speed.length - 1];
+
+  let rpm =
+    (last * gears[1].getRatio()) / (0.245 * tire.getCircumference() * 0.001 * 60);
+
+  var object: Speed = [
+    {
+      rpm: rpm,
+      speed: last,
+    },
+    {
+      rpm: 8000,
+      speed: last,
+    },
+  ];
+  console.log(rpm);
+  return (
     <VictoryLine
       key={'gear_' + i}
       data={object}
