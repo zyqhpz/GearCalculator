@@ -1,19 +1,6 @@
 import React, {FC} from 'react';
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  Text,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native';
-import {
-  VictoryBar,
-  VictoryChart,
-  VictoryTheme,
-  VictoryLine,
-  VictoryAxis,
-} from 'victory-native';
+import {StyleSheet, View, ScrollView, SafeAreaView} from 'react-native';
+import {VictoryChart, VictoryTheme, VictoryLine} from 'victory-native';
 
 import Tire from './data/model/Tire';
 import Gear from './data/model/Gear';
@@ -49,16 +36,6 @@ let speeds = Array<Number>();
 for (let i = 0; i < gears.length; i++) {
   speeds.push(gears[i].getSpeed());
 }
-
-const tireGear = new Tire(
-  tireSpec.width,
-  tireSpec.aspectRatio,
-  tireSpec.diameter,
-);
-
-let gearsNew = Array<Gear>();
-
-gearsNew = gears.slice(1, undefined);
 
 const tuningView = gears.map((gear, i) => {
   var colors = ['green', 'red', 'blue', 'orange', 'purple'];
@@ -219,7 +196,7 @@ const progressiveLine = (
   />
 );
 
-const Speed: FC = () => {
+const Tune: FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -254,4 +231,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Speed;
+export default Tune;
