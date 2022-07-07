@@ -50,306 +50,15 @@ for (let i = 0; i < gears.length; i++) {
   speeds.push(gears[i].getSpeed());
 }
 
-// gears.forEach((c, i) => console.log(c, i));
-
-const _renderShifts = () => {
-  const shifts = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
-  ];
-
-  let rpm = [2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
-
-  return rpm.map(rpm => {
-    <VictoryLine key={rpm} data={[{x: rpm, y: rpm}]} x="x" y="y" />;
-  });
-
-  // return shifts.map(shift => {
-  //   <Picker.Item key={'shift_' + i} label={shift} value={shift} />;
-  // });
-};
-
 const tireGear = new Tire(
   tireSpec.width,
   tireSpec.aspectRatio,
   tireSpec.diameter,
 );
 
-// const
-
-// tireGear.copyInto(jsonResult);
-
-const _renderRpm = () => {
-  const rpm = [2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
-
-  return rpm;
-
-  // return rpm.map((rpm) => {
-  //   // <VictoryLine key={rpm} data={[{x: rpm, y: rpm}]} x="x" y="y" />;
-  // });
-};
-
-const _renderSpeeds = () => {
-  const speedV = [50, 100, 150, 200, 250, 300, 350, 400, 450];
-
-  return speedV;
-};
-
-let _ratioSpeed = gears[0].getSpeeds();
-
-const gearsView = gears.map((gear, i) => {
-  let _speeds = gears[i].getSpeeds();
-  let _ratioSpeeds = gears[i].getRatioSpeeds();
-  // let _rpm = gears[i]
-
-  // let rpm[] = {};
-
-  // let _rpm = _ratioSpeed.map((ratioSpeed, i) => {
-  //   rpm[i] = {x: ratioSpeed, y: _speeds[i]};
-  // },
-  // rpm);
-
-  interface Speed {
-    rpm: number;
-    speed: number;
-  }
-
-  const myVar: Record<number, number> = {
-    10: 100,
-    20: 200,
-  };
-
-  var obj: Speed = [
-    {
-      rpm: 0,
-      speed: 0,
-    },
-    {
-      rpm: 4000,
-      speed: 31,
-    },
-    {
-      rpm: 5000,
-      speed: 39,
-    },
-    {
-      rpm: 6000,
-      speed: 47,
-    },
-    {
-      rpm: 7000,
-      speed: 55,
-    },
-    {
-      rpm: 8000,
-      speed: 63,
-    },
-  ];
-
-  // for (let i = 0; i < _ratioSpeeds.length; i++) {
-
-  return (
-    <VictoryLine
-      key={'gear_' + i}
-      // data={_ratioSpeeds}
-      // data={myVar}
-      data={obj}
-      y="rpm"
-      x="speed"
-      style={{
-        data: {
-          stroke: '#c43a31',
-          strokeWidth: 2,
-        },
-      }}
-    />
-  );
-});
-
-let gear1 = Array<Gear>();
-gear1 = gears.slice(0, 1);
-
-const gear1View = gear1.map((gear, i) => {
-  let _speeds = gears[0].getRatioSpeeds();
-  var object: Speed = [
-    {
-      rpm: 0,
-      speed: 0,
-    },
-    {
-      rpm: 4000,
-      speed: 31,
-    },
-    {
-      rpm: 5000,
-      speed: 39,
-    },
-    {
-      rpm: 6000,
-      speed: 47,
-    },
-    {
-      rpm: 7000,
-      speed: 55,
-    },
-    {
-      rpm: 8000,
-      speed: 63,
-    },
-  ];
-
-  let _rpms = [0, 4000, 5000, 6000, 7000, 8000];
-
-  // map rpmSpeed to Speed object
-  for (let m = 0; m < _rpms.length; m++) {
-    object[m] = {
-      rpm: _rpms[m],
-      speed: _speeds.get(_rpms[m]),
-    };
-  }
-  return (
-    <VictoryLine
-      key={'gearD_' + i}
-      data={object}
-      y="rpm"
-      x="speed"
-      style={{
-        data: {
-          stroke: 'black',
-          strokeWidth: 2,
-        },
-      }}
-    />
-  );
-});
-
 let gearsNew = Array<Gear>();
 
 gearsNew = gears.slice(1, undefined);
-
-const gearsView2 = gearsNew.map((gear, i) => {
-  interface Speed {
-    rpm: number;
-    speed: number;
-  }
-
-  var colors = ['green', 'red', 'blue', 'orange', 'purple'];
-
-  var object: Speed = [
-    {
-      rpm: 0,
-      speed: 0,
-    },
-    {
-      rpm: 4000,
-      speed: 31,
-    },
-    {
-      rpm: 5000,
-      speed: 39,
-    },
-    {
-      rpm: 6000,
-      speed: 47,
-    },
-    {
-      rpm: 7000,
-      speed: 55,
-    },
-    {
-      rpm: 8000,
-      speed: 63,
-    },
-  ];
-
-  // var rpmSpeed = gear[i].getRatioSpeeds();
-  var rpmSpeed = gears[i].getRatioSpeeds();
-
-  let _rpms = [0, 4000, 5000, 6000, 7000, 8000];
-
-  // map rpmSpeed to Speed object
-  for (let m = 0; m < _rpms.length; m++) {
-    object[m] = {
-      rpm: _rpms[m],
-      speed: rpmSpeed.get(_rpms[m]),
-    };
-  }
-
-  // let objectArray = rpmSpeed.map((rpmSpeed, i) => {
-  //   object = {
-  //     rpm: rpmSpeed,
-  //     speed: gear.getSpeeds()[i],
-  //   };
-  //   return object;
-  // }
-
-  var obj: Speed = [
-    {
-      rpm: 0,
-      speed: 0,
-    },
-    {
-      rpm: 4000,
-      speed: 31,
-    },
-    {
-      rpm: 5000,
-      speed: 39,
-    },
-    {
-      rpm: 6000,
-      speed: 47,
-    },
-    {
-      rpm: 7000,
-      speed: 55,
-    },
-    {
-      rpm: 8000,
-      speed: 63,
-    },
-  ];
-
-  let _rpmList = [0, 4000, 5000, 6000, 7000, 8000];
-  // let _speedList = [0, 44, 55, 66, 77, 88];
-  // let _speedList = gears[i].getSpeeds();
-
-  // // obj.rpm = _rpmList;
-  // for (let k = 0; k < _rpmList.length; k++) {
-  //   obj[k].rpm = _rpmList[k];
-  //   obj[k].speed = _speedList[k];
-  // }
-
-  // let _speeds = gear.getSpeeds();
-  // obj[0].rpm = 0;
-  // obj[0].speed = 12;
-
-  // // set new value to obj
-  // obj[0].rpm = gear.getRatio();
-  // obj[0].speed = gear.getSpeed();
-
-  return (
-    <VictoryLine
-      key={'gear_' + i}
-      // data={_ratioSpeeds}
-      // data={myVar}
-      data={object}
-      y="rpm"
-      x="speed"
-      style={{
-        data: {
-          stroke: colors[i],
-          strokeWidth: 2,
-        },
-      }}
-    />
-  );
-});
 
 const tuningView = gears.map((gear, i) => {
   var colors = ['green', 'red', 'blue', 'orange', 'purple'];
@@ -435,55 +144,46 @@ const tuningView = gears.map((gear, i) => {
   );
 });
 
-const tuningView2 = gears.map((gear, i) => {
-  // var colors = ['green', 'red', 'blue', 'orange', 'purple'];
+const tuningViewAll = gears.map((gear, i) => {
+  if (i != 4) {
+    let speed = gears[i].getSpeeds();
 
-  // let speed =
-  //   rpm[j] *
-  //   ((1 / this.gears[i].getRatio()) *
-  //     finalDrive *
-  //     this.tire.getCircumference() *
-  //     0.001 *
-  //     60);
+    // get last element of array
+    let last = speed[speed.length - 1];
 
-  let speed = gears[0].getSpeeds();
+    let rpm =
+      (last * gears[i + 1].getRatio()) /
+      (0.245 * tire.getCircumference() * 0.001 * 60);
 
-  // get last element of array
-  let last = speed[speed.length - 1];
-
-  let rpm =
-    (last * gears[1].getRatio()) / (0.245 * tire.getCircumference() * 0.001 * 60);
-
-  var object: Speed = [
-    {
-      rpm: rpm,
-      speed: last,
-    },
-    {
-      rpm: 8000,
-      speed: last,
-    },
-  ];
-  console.log(rpm);
-  return (
-    <VictoryLine
-      key={'gear_' + i}
-      data={object}
-      y="rpm"
-      x="speed"
-      style={{
-        data: {
-          stroke: 'black',
-          strokeWidth: 2,
-        },
-      }}
-    />
-  );
+    var object: Speed = [
+      {
+        rpm: rpm,
+        speed: last,
+      },
+      {
+        rpm: 8000,
+        speed: last,
+      },
+    ];
+    // console.log(rpm);
+    return (
+      <VictoryLine
+        key={'gear_' + i}
+        data={object}
+        y="rpm"
+        x="speed"
+        style={{
+          data: {
+            stroke: 'black',
+            strokeWidth: 2,
+          },
+        }}
+      />
+    );
+  }
 });
 
 const Speed: FC = () => {
-  // forEach gears to View
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -492,7 +192,8 @@ const Speed: FC = () => {
           <VictoryChart minDomain={{y: 0}}>{tuningView}</VictoryChart>
           <VictoryChart minDomain={{y: 0}}>
             {tuningView}
-            {tuningView2}
+            {/* {tuningView2} */}
+            {tuningViewAll}
           </VictoryChart>
           {/* <VictoryChart minDomain={{x: 0, y: 0}}>{gearsView2}</VictoryChart> */}
         </View>
