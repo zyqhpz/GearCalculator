@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {StyleSheet, View, ScrollView, SafeAreaView} from 'react-native';
+import {StyleSheet, View, ScrollView, SafeAreaView, Text} from 'react-native';
 import {VictoryChart, VictoryTheme, VictoryLine} from 'victory-native';
 
 import Tire from './data/model/Tire';
@@ -15,7 +15,6 @@ let gears = Array<Gear>();
 for (let i = 0; i < gearRatioData.length; i++) {
   const gear = new Gear(gearRatioData[i].ratio, gearRatioData[i].speed);
   gears.push(gear);
-  // console.log(gear.getRatio());
 }
 
 const tuning = new Tuning(gears, 7000, tire);
@@ -28,13 +27,6 @@ gears = tuning.getGears();
 interface Speed {
   rpm: number;
   speed: number;
-}
-
-// hashmap gears to speed
-let speeds = Array<Number>();
-
-for (let i = 0; i < gears.length; i++) {
-  speeds.push(gears[i].getSpeed());
 }
 
 const tuningView = gears.map((gear, i) => {
@@ -196,11 +188,12 @@ const progressiveLine = (
   />
 );
 
-const Tune: FC = () => {
+const Tune: FC = props => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View>
+          <Text>{props.speed}</Text>
           {/* <VictoryChart minDomain={{y: 0}}>{gear1View}</VictoryChart> */}
           <VictoryChart minDomain={{y: 0}}>{tuningView}</VictoryChart>
           <VictoryChart minDomain={{y: 0}} theme={VictoryTheme.material}>
@@ -211,12 +204,6 @@ const Tune: FC = () => {
           </VictoryChart>
           {/* <VictoryChart minDomain={{x: 0, y: 0}}>{gearsView2}</VictoryChart> */}
         </View>
-        {/* <View style={styles.container}>
-        <VictoryChart>{gearsView}</VictoryChart>
-      </View>
-      <View style={styles.container}>
-        <VictoryChart>{gearsView}</VictoryChart>
-      </View> */}
       </ScrollView>
     </SafeAreaView>
   );
