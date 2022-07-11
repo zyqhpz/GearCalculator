@@ -46,23 +46,23 @@ const tuningView = gears.map((gear, i) => {
       },
       {
         rpm: 4000,
-        speed: 31,
+        speed: 0,
       },
       {
         rpm: 5000,
-        speed: 39,
+        speed: 0,
       },
       {
         rpm: 6000,
-        speed: 47,
+        speed: 0,
       },
       {
         rpm: 7000,
-        speed: 55,
+        speed: 0,
       },
       {
         rpm: 8000,
-        speed: 63,
+        speed: 0,
       },
     ];
   } else {
@@ -70,23 +70,23 @@ const tuningView = gears.map((gear, i) => {
     var object: Speed = [
       {
         rpm: 4000,
-        speed: 31,
+        speed: 0,
       },
       {
         rpm: 5000,
-        speed: 39,
+        speed: 0,
       },
       {
         rpm: 6000,
-        speed: 47,
+        speed: 0,
       },
       {
         rpm: 7000,
-        speed: 55,
+        speed: 0,
       },
       {
         rpm: 8000,
-        speed: 63,
+        speed: 0,
       },
     ];
   }
@@ -117,8 +117,8 @@ const tuningView = gears.map((gear, i) => {
 let progressivePointsRpm = Array<Number>();
 let progressivePointsSpeed = Array<Number>();
 
-const tuningViewAll = gears.map((gear, i) => {
-  if (i != 4) {
+const tuningViewVertical = gears.map((gear, i) => {
+  if (i !== 4) {
     let speed = gears[i].getSpeeds();
 
     // get last element of array
@@ -188,21 +188,165 @@ const progressiveLine = (
   />
 );
 
+// const tuningViewCombined = gears.map((gear, i) => {
+//   var colors = ['green', 'red', 'blue', 'orange', 'purple'];
+
+//   var rpmSpeed = gears[i].getRatioSpeeds();
+
+//   let _rpmList;
+
+//   if (i == 0) {
+//     _rpmList = [0, 4000, 5000, 6000, 7000, 8000];
+
+//     var object: Speed = [
+//       {
+//         rpm: 0,
+//         speed: 0,
+//       },
+//       {
+//         rpm: 4000,
+//         speed: 0,
+//       },
+//       {
+//         rpm: 5000,
+//         speed: 0,
+//       },
+//       {
+//         rpm: 6000,
+//         speed: 0,
+//       },
+//       {
+//         rpm: 7000,
+//         speed: 0,
+//       },
+//       {
+//         rpm: 8000,
+//         speed: 0,
+//       },
+//     ];
+//   } else {
+//     _rpmList = [4000, 5000, 6000, 7000, 8000];
+//     var object: Speed = [
+//       {
+//         rpm: 4000,
+//         speed: 0,
+//       },
+//       {
+//         rpm: 5000,
+//         speed: 0,
+//       },
+//       {
+//         rpm: 6000,
+//         speed: 0,
+//       },
+//       {
+//         rpm: 7000,
+//         speed: 0,
+//       },
+//       {
+//         rpm: 8000,
+//         speed: 0,
+//       },
+//     ];
+//   }
+
+//   for (let m = 0; m < _rpmList.length; m++) {
+//     object[m] = {
+//       rpm: _rpmList[m],
+//       speed: rpmSpeed.get(_rpmList[m]),
+//     };
+//   }
+//   return (
+//     <VictoryLine
+//       key={'gear_' + i}
+//       data={object}
+//       y="rpm"
+//       x="speed"
+//       style={{
+//         data: {
+//           // stroke: colors[i],
+//           stroke: 'green',
+//           strokeWidth: 2,
+//         },
+//       }}
+//     />
+//   );
+// });
+
+var rpmSpeed1 = gears[0].getRatioSpeeds();
+var rpmSpeed4 = gears[4].getRatioSpeeds();
+
+const tuningViewCombined = (
+  <VictoryLine
+    data={[
+      {
+        rpm: 0,
+        speed: 0,
+      },
+      {
+        rpm: 8000,
+        speed: rpmSpeed1.get(8000),
+      },
+      {
+        rpm: 8000,
+        speed: progressivePointsSpeed[0],
+      },
+      {
+        rpm: progressivePointsRpm[0],
+        speed: progressivePointsSpeed[0],
+      },
+      {
+        rpm: 8000,
+        speed: progressivePointsSpeed[1],
+      },
+      {
+        rpm: progressivePointsRpm[1],
+        speed: progressivePointsSpeed[1],
+      },
+      {
+        rpm: 8000,
+        speed: progressivePointsSpeed[2],
+      },
+      {
+        rpm: progressivePointsRpm[2],
+        speed: progressivePointsSpeed[2],
+      },
+      {
+        rpm: 8000,
+        speed: progressivePointsSpeed[3],
+      },
+      {
+        rpm: progressivePointsRpm[3],
+        speed: progressivePointsSpeed[3],
+      },
+      {
+        rpm: 8000,
+        speed: rpmSpeed4.get(8000),
+      },
+    ]}
+    y="rpm"
+    x="speed"
+    style={{
+      data: {
+        stroke: 'black',
+        strokeWidth: 2,
+      },
+    }}
+  />
+);
+
 const Tune: FC = props => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View>
           <Text>{props.speed}</Text>
-          {/* <VictoryChart minDomain={{y: 0}}>{gear1View}</VictoryChart> */}
-          <VictoryChart minDomain={{y: 0}}>{tuningView}</VictoryChart>
           <VictoryChart minDomain={{y: 0}} theme={VictoryTheme.material}>
-            {tuningView}
-            {/* {tuningView2} */}
-            {tuningViewAll}
+            {/* {tuningView} */}
+            {/* {tuningViewVertical} */}
             {progressiveLine}
+            {tuningViewCombined}
           </VictoryChart>
-          {/* <VictoryChart minDomain={{x: 0, y: 0}}>{gearsView2}</VictoryChart> */}
         </View>
       </ScrollView>
     </SafeAreaView>
