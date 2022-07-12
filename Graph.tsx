@@ -8,61 +8,10 @@ import Tuning from './data/model/Tuning';
 import tireSpec from './data/tire';
 import gearRatioData from './data/gear';
 
-// const tire = new Tire(tireSpec.width, tireSpec.aspectRatio, tireSpec.diameter);
+let progressivePointsRPM: number[] = [];
+let progressivePointsSPEED: number[] = [];
 
-// let gears = Array<Gear>();
-
-// for (let i = 0; i < gearRatioData.length; i++) {
-//   const gear = new Gear(gearRatioData[i].ratio, gearRatioData[i].speed);
-//   gears.push(gear);
-// }
-
-// let progressivePointsRpm = Array<Number>();
-// let progressivePointsSpeed = Array<Number>();
-
-// const tuningViewVertical = gears.map((gear, i) => {
-//   if (i !== 4) {
-//     let speed = gears[i].getSpeeds();
-
-//     // get last element of array
-//     let last = speed[speed.length - 1];
-
-//     let rpm =
-//       (last * gears[i + 1].getRatio()) /
-//       (0.245 * tire.getCircumference() * 0.001 * 60);
-
-//     var object: Speed = [
-//       {
-//         rpm: rpm,
-//         speed: last,
-//       },
-//       {
-//         rpm: 8000,
-//         speed: last,
-//       },
-//     ];
-//     progressivePointsRpm.push(rpm);
-//     progressivePointsSpeed.push(last);
-//     return (
-//       <VictoryLine
-//         key={'gear_' + i}
-//         data={object}
-//         y="rpm"
-//         x="speed"
-//         style={{
-//           data: {
-//             stroke: 'black',
-//             strokeWidth: 2,
-//           },
-//         }}
-//       />
-//     );
-//   }
-// });
-
-let progressivePointsRPM = Array<Number>();
-let progressivePointsSPEED = Array<Number>();
-
+// a function to generate progressive lines for the graph
 function progressiveLine(
   progressivePointsRpm: Array<Number>,
   progressivePointsSpeed: Array<Number>,
@@ -131,15 +80,15 @@ function createGraph(
     speed: number;
   }
 
-  let progressivePointsRpm = Array<Number>();
-  let progressivePointsSpeed = Array<Number>();
+  let progressivePointsRpm: number[] = [];
+  let progressivePointsSpeed: number[] = [];
 
   var rpmSpeed1 = gears[0].getRatioSpeeds();
   var rpmSpeed4 = gears[4].getRatioSpeeds();
 
   gears.map((gear, i) => {
     if (i !== 4) {
-      let speed = gears[i].getSpeeds();
+      let speed = gear.getSpeeds();
 
       // get last element of array
       let last: number = speed[speed.length - 1];
@@ -155,7 +104,6 @@ function createGraph(
 
   progressivePointsRPM = progressivePointsRpm;
   progressivePointsSPEED = progressivePointsSpeed;
-  //   progressiveLine(progressivePointsRpm, progressivePointsSpeed);
 
   return (
     <VictoryLine
@@ -225,7 +173,7 @@ const Graph: FC = props => {
     tireSpec.diameter,
   );
 
-  let gears = Array<Gear>();
+  let gears: Gear[] = [];
 
   for (let i = 0; i < gearRatioData.length; i++) {
     const gear = new Gear(gearRatioData[i].ratio, gearRatioData[i].speed);
@@ -237,7 +185,6 @@ const Graph: FC = props => {
         <View>
           <Text>{props.speed}</Text>
           <VictoryChart minDomain={{y: 0}} theme={VictoryTheme.material}>
-            {/* {progressiveLine} */}
             {createGraph(gears, tire, 4.0816, 7000, 'lightblue')}
             {progressiveLine(progressivePointsRPM, progressivePointsSPEED)}
             {createGraph(gears, tire, 5, 7000, 'red')}
