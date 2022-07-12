@@ -133,8 +133,8 @@ function createGraph(
       let last = speed[speed.length - 1];
 
       let rpm =
-        (last * gears[i + 1].getRatio()) /
-        (finalDrive * tire.getCircumference() * 0.001 * 60);
+        (last * gears[i + 1].getRatio() * finalDrive) /
+        (tire.getCircumference() * 0.001 * 60);
 
       progressivePointsRpm.push(rpm);
       progressivePointsSpeed.push(last);
