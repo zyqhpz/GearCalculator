@@ -64,7 +64,7 @@ class Tuning {
         let speed =
           rpm[j] *
           ((1 / this.gears[i].getRatio()) *
-            finalDrive *
+            (1 / finalDrive) *
             this.tire.getCircumference() *
             0.001 *
             60);

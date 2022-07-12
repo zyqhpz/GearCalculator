@@ -225,9 +225,9 @@ const Graph: FC = props => {
           <Text>{props.speed}</Text>
           <VictoryChart minDomain={{y: 0}} theme={VictoryTheme.material}>
             {/* {progressiveLine} */}
-            {createGraph(gears, tire, 0.2, 7000, 'lightblue')}
+            {createGraph(gears, tire, 4.0816, 7000, 'lightblue')}
             {progressiveLine(progressivePointsRPM, progressivePointsSPEED)}
-            {createGraph(gears, tire, 0.245, 7000, 'red')}
+            {createGraph(gears, tire, 5, 7000, 'red')}
             {progressiveLine(progressivePointsRPM, progressivePointsSPEED)}
           </VictoryChart>
         </View>
