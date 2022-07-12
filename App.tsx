@@ -6,9 +6,11 @@ import Speed from './Speed';
 import Tune from './Tune';
 
 import C from './C';
+import Graph from './Graph';
 
 const App: FC = () => {
-  return <Tune speed={123} />;
+  // return <Tune speed={123} />;
+  return <Graph speed={123} />;
   // return <Example />;
   // return <C />;
 };
