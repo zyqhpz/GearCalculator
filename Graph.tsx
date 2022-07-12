@@ -89,6 +89,18 @@ function progressiveLine(
       ]}
       y="rpm"
       x="speed"
+      animate={{
+        duration: 1000,
+        onLoad: {
+          duration: 1000,
+          before: () => {
+            return {
+              _y: 0,
+              _x: 0,
+            };
+          },
+        },
+      }}
       style={{
         data: {
           stroke: 'green',
@@ -130,7 +142,7 @@ function createGraph(
       let speed = gears[i].getSpeeds();
 
       // get last element of array
-      let last = speed[speed.length - 1];
+      let last: number = speed[speed.length - 1];
 
       let rpm =
         (last * gears[i + 1].getRatio() * finalDrive) /
@@ -195,6 +207,7 @@ function createGraph(
       ]}
       y="rpm"
       x="speed"
+      animate
       style={{
         data: {
           stroke: color,

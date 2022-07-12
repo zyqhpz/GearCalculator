@@ -1,7 +1,7 @@
 class Gear {
   ratio: number;
   speed: number;
-  speeds: Array<Number>;
+  speeds: Array<number>;
   ratioSpeeds: Map<Number, Number>;
 
   constructor(ratio: number, speed: number) {
@@ -18,7 +18,7 @@ class Gear {
     this.speed = speed;
   }
 
-  setSpeeds(speeds: Array<Number>): void {
+  setSpeeds(speeds: Array<number>): void {
     this.speeds = speeds;
   }
 
@@ -39,7 +39,7 @@ class Gear {
   //   return speedMap;
   // }
 
-  getSpeeds(): Array<Number> {
+  getSpeeds(): Array<number> {
     return this.speeds;
   }
 
