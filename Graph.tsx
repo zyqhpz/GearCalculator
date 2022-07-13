@@ -180,19 +180,15 @@ const Graph: FC = props => {
     gears.push(gear);
   }
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View>
-          <Text>{props.speed}</Text>
-          <VictoryChart minDomain={{y: 0}} theme={VictoryTheme.material}>
-            {createGraph(gears, tire, 4.0816, 7000, 'lightblue')}
-            {progressiveLine(progressivePointsRPM, progressivePointsSPEED)}
-            {createGraph(gears, tire, 5, 7000, 'red')}
-            {progressiveLine(progressivePointsRPM, progressivePointsSPEED)}
-          </VictoryChart>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <View>
+      <Text>{props.speed}</Text>
+      <VictoryChart minDomain={{y: 0}} theme={VictoryTheme.material}>
+        {createGraph(gears, tire, 4.0816, 7000, 'lightblue')}
+        {progressiveLine(progressivePointsRPM, progressivePointsSPEED)}
+        {createGraph(gears, tire, 5, 7000, 'red')}
+        {progressiveLine(progressivePointsRPM, progressivePointsSPEED)}
+      </VictoryChart>
+    </View>
   );
 };
 
