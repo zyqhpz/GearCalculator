@@ -15,6 +15,7 @@ let progressivePointsSPEED: number[] = [];
 function progressiveLine(
   progressivePointsRpm: Array<Number>,
   progressivePointsSpeed: Array<Number>,
+  color: string,
 ) {
   return (
     <VictoryLine
@@ -52,7 +53,7 @@ function progressiveLine(
       }}
       style={{
         data: {
-          stroke: 'green',
+          stroke: color,
           strokeWidth: 2,
         },
       }}
@@ -184,9 +185,13 @@ const Graph: FC = props => {
       <Text>{props.speed}</Text>
       <VictoryChart minDomain={{y: 0}} theme={VictoryTheme.material}>
         {createGraph(gears, tire, 4.0816, 7000, 'lightblue')}
-        {progressiveLine(progressivePointsRPM, progressivePointsSPEED)}
+        {progressiveLine(
+          progressivePointsRPM,
+          progressivePointsSPEED,
+          'lightblue',
+        )}
         {createGraph(gears, tire, 5, 7000, 'red')}
-        {progressiveLine(progressivePointsRPM, progressivePointsSPEED)}
+        {progressiveLine(progressivePointsRPM, progressivePointsSPEED, 'red')}
       </VictoryChart>
     </View>
   );
