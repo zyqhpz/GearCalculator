@@ -20,6 +20,7 @@ import Line from './examples/LineD';
 import LineChart from './examples/LineChart';
 
 import BarChart from './examples/Bar';
+import GraphLine from './GraphLine';
 
 const App: FC = () => {
   const dimensions = Dimensions.get('window');
@@ -46,13 +47,14 @@ const App: FC = () => {
           <Graph speed={123} />
         </View>
         {/* <Map dimensions={dimensions} /> */}
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
           <BarChart data={data} round={100} unit="€" />
-        </View>
+        </View> */}
         {/* <BarChart /> */}
         {/* <View> */}
         {/* <Line /> */}
         {/* </View> */}
+        <GraphLine />
       </ScrollView>
     </SafeAreaView>
   );
