@@ -21,6 +21,7 @@ import LineChart from './examples/LineChart';
 
 import BarChart from './examples/Bar';
 import GraphLine from './GraphLine';
+import PartialLineChartExample from './PartialLines';
 
 const App: FC = () => {
   const dimensions = Dimensions.get('window');
@@ -55,6 +56,9 @@ const App: FC = () => {
         {/* <Line /> */}
         {/* </View> */}
         <GraphLine />
+        <View style={styles.container}>
+          <PartialLineChartExample />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

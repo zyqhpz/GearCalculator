@@ -1,14 +1,15 @@
 import React, {PureComponent} from 'react';
 import {Dimensions, View} from 'react-native';
-import {Svg, G, Line, Rect, Text} from 'react-native-svg';
+import {Svg, G, Line, Rect, Text, ClipPath, Defs} from 'react-native-svg';
 import * as d3 from 'd3';
-import {LineChart, Grid, YAxis, XAxis} from 'react-native-svg-charts';
+import {LineChart, Grid, YAxis, XAxis, Path} from 'react-native-svg-charts';
 
 import Tire from './data/model/Tire';
 import Gear from './data/model/Gear';
 import Tuning from './data/model/Tuning';
 import tireSpec from './data/tire';
 import gearRatioData from './data/gear';
+import {index} from 'd3';
 
 let progressivePointsRPM: number[] = [];
 let progressivePointsSPEED: number[] = [];
@@ -187,128 +188,129 @@ class GraphLine extends React.PureComponent {
         svg: {stroke: 'red'},
       },
       {
+        data: [
+          {
+            rpm: progressivePointsRpm[0],
+            speed: progressivePointsSpeed[0],
+          },
+          {
+            rpm: progressivePointsRpm[0] + 200,
+            speed: progressivePointsSpeed[0] + 10,
+          },
+        ],
+        svg: {stroke: 'blue'},
+      },
+      {
         data: datadummy,
-        yAccessor: ({item}) => item.rpm,
-        xAccessor: ({item}) => item.speed,
         svg: {stroke: 'green'},
       },
     ];
 
-    return (
-      <>
-        <View
-          style={{
-            padding: 5,
-            height: 200,
-            // width: '100%',
-            width: windowWidth,
-            flexDirection: 'row',
-            backgroundColor: '#fff',
-          }}>
-          <YAxis
-            data={dataY}
-            contentInset={{top: 20, bottom: 20}}
-            svg={{
-              fill: 'grey',
-              fontSize: 10,
-            }}
-            numberOfTicks={10}
-            formatLabel={value => `${value}ºC`}
+    const indexToClipFrom = 10;
+
+    const Clips = ({x, width}) => (
+      <Defs key={'clips'}>
+        <ClipPath id="clip-path-1">
+          <Rect
+            x={'0'}
+            y={'0'}
+            width={x(dataCombined[0].data[0].speed)}
+            height={'100%'}
           />
+        </ClipPath>
+        <ClipPath id={'clip-path-2'}>
+          <Rect
+            x={x(dataCombined[0].data[0].speed)}
+            y={'0'}
+            width={x(dataCombined[0].data[0].speed)}
+            height={'100%'}
+          />
+        </ClipPath>
+      </Defs>
+    );
+
+    // Line extras:
+    const DashedLine = ({line}) => (
+      <Path
+        key={'line-1'}
+        d={line}
+        stroke={'rgb(134, 65, 244)'}
+        strokeWidth={2}
+        fill={'none'}
+        strokeDasharray={[4, 4]}
+        // clipPath={'url(#clip-path-2)'}
+      />
+    );
+
+    const Shadow = ({line}) => (
+      <Path
+        y={3}
+        key={'shadow-1'}
+        d={line}
+        stroke={'rgba(134, 65, 244, 0.2)'}
+        strokeWidth={5}
+        fill={'none'}
+      />
+    );
+
+    const axesSvg = {fontSize: 10, fill: 'grey'};
+    const verticalContentInset = {top: 10, bottom: 10};
+    const xAxisHeight = 30;
+
+    return (
+      <View
+        style={{
+          paddingLeft: 20,
+          paddingRight: 20,
+          height: 300,
+          // width: '100%',
+          width: windowWidth,
+          flexDirection: 'row',
+          backgroundColor: '#fff',
+        }}>
+        <YAxis
+          data={dataY}
+          contentInset={{top: 20, bottom: 20}}
+          svg={{
+            fill: 'grey',
+            fontSize: 10,
+          }}
+          numberOfTicks={10}
+          formatLabel={value => `${value}ºC`}
+        />
+        <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
           <LineChart
             // style={{height: 200}}
-            style={{flex: 1, marginLeft: 16}}
+            // style={{flex: 1, marginLeft: 16}}
+            style={{flex: 1}}
             // data={data}
             // data={dataY}
             data={dataCombined}
             yAccessor={({item}) => item.rpm}
             xAccessor={({item}) => item.speed}
-            // yAccessor={({rpmArray}) => rpmArray}
-            // xAccessor={({speedArray}) => speedArray}
-            // xAccessor={{speedArray}}
-            svg={{stroke: 'green'}}
+            // gridMin={0}
+            // gridMax={Math.max(...dataX)}
+            svg={{
+              stroke: 'green',
+              strokeWidth: 2,
+              clipPath: 'url(#clip-path-1)',
+            }}
             contentInset={{top: 20, bottom: 20}}>
-            {/* <XAxis
-              // style={{marginTop: 10}}
-              // style={{marginTop: 10}}
-              // data={axisX}
-              // formatLabel={(value, index) =>
-              //   index % 2 === 0 ? `${value}` : ' '
-              // }
-              // // formatLabel={value => {
-              // //   return dataX.map(item => {
-              // //     return `${item}\n`;
-              // //   });
-              // // }}
-              xAccessor={({item}) => item.speed}
-              contentInset={{left: 10, right: 10}}
-              svg={{
-                fill: '#394092',
-                fontSize: 8,
-                // color: 'white',
-              }}
-              // numberOfTicks={10}
-            /> */}
-            <G>
-              <XAxis
-                style={{width: windowWidth}}
-                // style={{marginTop: 10}}
-                // style={{marginTop: 10}}
-                data={axisX}
-                // formatLabel={(value, index) =>
-                //   index % 2 === 0 ? `${value}` : ' '
-                // }
-                // // formatLabel={value => {
-                // //   return dataX.map(item => {
-                // //     return `${item}\n`;
-                // //   });
-                // // }}
-                xAccessor={({item}) => item}
-                contentInset={{left: 10, right: 10}}
-                svg={{
-                  fill: '#394092',
-                  fontSize: 8,
-                  // color: 'white',
-                }}
-                // numberOfTicks={10}
-              />
-            </G>
             <Grid />
           </LineChart>
+          <XAxis
+            style={{marginHorizontal: -10, height: xAxisHeight}}
+            // data={axisX}
+            data={dataCombined[2].data}
+            // display ac as xAxis
+            formatLabel={value => `${value}`}
+            // xAccessor={({item}) => item}
+            xAccessor={({item}) => item.speed}
+            contentInset={{left: 10, right: 10}}
+            svg={{fontSize: 10, fill: 'grey'}}
+          />
         </View>
-        <View
-          style={{
-            padding: 5,
-            height: 200,
-            width: '95%',
-            backgroundColor: 'white',
-            // flexDirection: 'row',
-          }}>
-          <G>
-            <XAxis
-              // style={{marginTop: 10}}
-              style={{marginTop: 10}}
-              data={axisX}
-              // formatLabel={(value, index) =>
-              //   index % 2 === 0 ? `${value}` : ' '
-              // }
-              // // formatLabel={value => {
-              // //   return dataX.map(item => {
-              // //     return `${item}\n`;
-              // //   });
-              // // }}
-              xAccessor={({item}) => item}
-              contentInset={{left: 10, right: 10}}
-              svg={{
-                fill: '#394092',
-                fontSize: 8,
-                // color: 'white',
-              }}
-              // numberOfTicks={10}
-            />
-          </G>
-        </View>
-      </>
+      </View>
     );
   }
 }
